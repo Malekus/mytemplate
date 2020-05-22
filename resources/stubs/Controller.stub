@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\{{Modele}}Request;
+use App\{{Modele}};
+
+class {{Modele}}Controller extends Controller
+{
+    public function index()
+    {
+        ${{modeles}} = {{Modele}}::all();
+        return view('{{modele}}.index', compact('{{modeles}}'));
+    }
+
+    public function show($id)
+    {
+        ${{modele}} = {{Modele}}::find($id);
+        return view('{{modele}}.show', compact('{{modele}}'));
+    }
+
+    public function create()
+    {
+        return view('{{modele}}.create');
+    }
+
+    public function store({{Modele}}Request $request)
+    {
+        ${{modele}} = new {{Modele}}($request->all());
+        ${{modele}}->save();
+        return redirect(route('{{modeles}}.show', ['{{modele}}' => ${{modele}}]));
+    }
+
+    public function edit($id)
+    {
+        ${{modele}} = {{Modele}}::find($id);
+        return view('{{modele}}.edit', compact('{{modele}}'));
+    }
+
+    public function update({{Modele}}Request $request, $id)
+    {
+        ${{modele}} = {{Modele}}::findOrFail($id);
+        ${{modele}}->update($request->all());
+        return redirect(route('{{modeles}}.show', $id));
+    }
+
+    public function destroy($id)
+    {
+        {{Modele}}::destroy($id);
+        return response()->json(null, 204);
+    }
+}
