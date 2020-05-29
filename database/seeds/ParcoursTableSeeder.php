@@ -12,7 +12,7 @@ class ParcoursTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Parcours::class, rand(100, 300))->create();
+        factory(Parcours::class, 100)->create();
     }
 }
 

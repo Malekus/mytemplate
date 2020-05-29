@@ -12,7 +12,7 @@ class PrestationTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Prestation::class, rand(100, 300))->create();
+        factory(Prestation::class, 100)->create();
     }
 }
 

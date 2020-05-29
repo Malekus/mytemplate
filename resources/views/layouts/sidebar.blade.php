@@ -64,6 +64,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href="#" class=" waves-effect">
+                    <i class="fas fa-cogs"></i>
+                    <span>Configuration</span>
+                </a>
+            </li>
+
 
         </ul>
     </div>

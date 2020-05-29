@@ -1,4 +1,4 @@
-{!! Form::hidden('parcours_id', $parcours, ['class' => 'form-control', 'required']) !!}
+{!! Form::hidden('parcour_id', $parcours, ['class' => 'form-control', 'required']) !!}
 
 <div class="form-group row">
     {!! Form::label('dispositif', 'Dispositif', ['class' => 'col-sm-2 col-form-label']) !!}
@@ -92,5 +92,10 @@
     </div>
 </div>
 
-
+<div class="form-group row">
+    {!! Form::label('rdv_max', 'Nombre de rendez-vous prévus', ['class' => 'col-sm-2 col-form-label']) !!}
+    <div class="col-sm-10">
+        {!! Form::number('rdv_max', 5, ['class' => 'form-control']) !!}
+    </div>
+</div>
 

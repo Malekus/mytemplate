@@ -125,6 +125,13 @@
             </div>
 
             <div class="form-group row">
+                {!! Form::label('beneficiaire_id_projet', 'Bénéficiaire', ['class' => 'col-lg-2 col-form-label']) !!}
+                <div class="col-sm-10">
+                    {!! Form::select('beneficiaire_id_projet', $beneficiaires, null,['class' => 'form-control', 'required', 'placeholder' => 'Choisissez un conseiller']) !!}
+                </div>
+            </div>
+
+            <div class="form-group row">
                 {!! Form::label('intitule_projet', 'Intitulé', ['class' => 'col-sm-2 col-form-label']) !!}
                 <div class="col-sm-10">
                     {!! Form::text('intitule_projet', null, ['class' => 'form-control', 'required']) !!}

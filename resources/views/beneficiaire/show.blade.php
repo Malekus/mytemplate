@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
-
+    <link href="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -53,14 +53,14 @@
                                 <li class="list-group-item"><strong>Adresse</strong> : {{ $beneficiaire->adresse }}</li>
                             </ul>
                         </div>
-
                         <div class="col-6">
                             <ul class="list-group">
                                 <li class="list-group-item"><strong>Entreprise</strong> : {{ $beneficiaire->nom }}</li>
-                                <li class="list-group-item"><strong>Crée le</strong>
-                                    : {{ \Carbon\Carbon::parse($beneficiaire->created_at)->format('d/m/Y') }}</li>
-                                <li class="list-group-item"><strong>Dernière activité</strong>
-                                    : {{ \Carbon\Carbon::parse($beneficiaire->updated_at)->format('d/m/Y') }}</li>
+                                <li class="list-group-item"><strong>Crée le</strong> : {{ \Carbon\Carbon::parse($beneficiaire->created_at)->format('d/m/Y') }}</li>
+                                <li class="list-group-item"><strong>Dernière activité</strong> : {{ \Carbon\Carbon::parse($beneficiaire->updated_at)->format('d/m/Y') }}</li>
+                                <li class="list-group-item"><strong>Nombre de parcours</strong> : {{ $beneficiaire->parcours->count() }}</li>
+                                <li class="list-group-item"><strong>Nombre de prestations</strong> : X</li>
+                                <li class="list-group-item"><strong>Nombre de rendez-vous</strong> : X</li>
                             </ul>
                         </div>
                     </div>
@@ -69,6 +69,7 @@
         </div> <!-- end col -->
     </div> <!-- end row -->
 
+    <!-- start page -->
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -91,8 +92,7 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active p-3" id="home2" role="tabpanel">
-                            @if (isset($beneficiaire->projets))
-
+                            @if ($beneficiaire->projets->count() !== 0)
                                 <table class="table table-bordered mb-0">
                                     <thead>
                                         <tr>
@@ -140,90 +140,164 @@
             </div>
         </div>
     </div>
+    <!-- end page -->
 
-    @empty($beneficiaire->parcours)
-    @endempty
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="page-title-box">
-                        <h4 class="font-size-18">Parcours</h4>
-                    </div>
-                    <div id="accordion">
-                        @foreach($beneficiaire->parcours as $parcours)
-                            <div class="card mb-1">
-                                <div class="card-header p-3" id="{{ 'heading'.$parcours->id  }}">
-                                    <div class="d-flex justify-content-between align-items-center flex-nowrap">
-                                        <div class="">
-                                            <h6 class="m-0 font-14">
-                                                <a href="{{ '#collapse'.$parcours->id  }}" class="text-dark"
-                                                   data-toggle="collapse"
-                                                   aria-expanded="false"
-                                                   aria-controls="{{ 'collapse'.$parcours->id  }}">
-                                                    Intitulé : {{ $parcours->projet->intitule  }}
-                                                </a>
-                                            </h6>
+    @if($beneficiaire->parcours->count() != 0)
+        <div class="row" id="displayParcours">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="page-title-box">
+                            <h4 class="font-size-18">Parcours</h4>
+                        </div>
+                        <div id="accordion">
+                            @foreach($beneficiaire->parcours as $parcours)
+                                <div class="card mb-1">
+                                    <div class="card-header p-3" id="{{ 'heading'.$parcours->id  }}">
+                                        <div class="d-flex justify-content-between align-items-center flex-nowrap">
+                                            <div class="">
+                                                <h6 class="m-0 font-14">
+                                                    <a href="{{ '#collapse'.$parcours->id  }}" class="text-dark"
+                                                       data-toggle="collapse"
+                                                       aria-expanded="false"
+                                                       aria-controls="{{ 'collapse'.$parcours->id  }}">
+                                                        Intitulé : {{ $parcours->projet->intitule  }}
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div>
+                                                <a href="{{ route('prestations.create.parcours', $parcours) }}"
+                                                   class="btn btn-success">Ajouter une prestation</a>
+                                                <a href="#"
+                                                   class="btn btn-primary">Modifier le parcours</a>
+                                                <button class="btn btn-danger sa-warning" id="{{ $parcours->id }}">Supprimer le parcours</button>
+                                            </div>
                                         </div>
-                                        <div class="">
-                                            <a href="{{ route('prestations.create', $parcours) }}"
-                                               class="btn btn-success">Ajouter une prestation</a>
+
+                                    </div>
+                                    <div id="{{ 'collapse'.$parcours->id  }}" class="collapse"
+                                         aria-labelledby="{{ 'heading'.$parcours->id  }}" data-parent="#accordion">
+                                        <div class="card-body">
+                                            @if($parcours->prestations->count() != 0)
+                                                <table class="table table-bordered mb-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Dispositif</th>
+                                                        <th>Statut</th>
+                                                        <th>Viabilité</th>
+                                                        <th>Date de début</th>
+                                                        <th>Date de fin</th>
+                                                        <th>Nombre de rendez-vous</th>
+                                                        <th>Rendez-vous restant</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($parcours->prestations as $prestation)
+                                                        <tr>
+                                                            <td>{{ $prestation->dispositif }}</td>
+                                                            <td>{{ $prestation->statut }}</td>
+                                                            <td>{{ $prestation->viabilite }}</td>
+                                                            <td>{{ $prestation->date_debut }}</td>
+                                                            <td>{{ $prestation->date_fin }}</td>
+                                                            <td>{{ $prestation->rdv_max }}</td>
+                                                            <td>{{ $prestation->rdv_max - $prestation->rendezvous->count() }}</td>
+                                                            <td class="text-center">
+                                                             <button class="btn btn-warning" data-model="prestation" data-action="show" data-id="{{ $prestation->id }}" data-toggle="modal" data-target=".modal-lg-content">Gérer</button>
+                                                                <a class="btn btn-success" href="{{ route("prestations.show", $prestation) }}">Afficher</a>
+                                                                <a class="btn btn-primary" href="{{ route("prestations.edit", $prestation) }}">Modifier</a>
+                                                                <a class="btn btn-danger" href="#">Supprimer</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <p>Aucune prestation</p>
+                                            @endif
                                         </div>
                                     </div>
-
                                 </div>
-                                <div id="{{ 'collapse'.$parcours->id  }}" class="collapse"
-                                     aria-labelledby="{{ 'heading'.$parcours->id  }}" data-parent="#accordion">
-                                    <div class="card-body">
-                                        @forelse ($parcours->prestations as $prestation)
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                <tr>
-                                                    <th>Dispositif</th>
-                                                    <th>Statut</th>
-                                                    <th>Type de sortie</th>
-                                                    <th>Motif de sortie</th>
-                                                    <th>Viabilité</th>
-                                                    <th>Délai de réalisation</th>
-                                                    <th>Orientation</th>
-                                                    <th>Libellé</th>
-                                                    <th>Date de début</th>
-                                                    <th>Date de fin</th>
-                                                    <th>Rendez-vous</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>{{ $prestation->dispositif }}</td>
-                                                    <td>{{ $prestation->statut }}</td>
-                                                    <td>{{ $prestation->type_sortie }}</td>
-                                                    <td>{{ $prestation->motif_sortie }}</td>
-                                                    <td>{{ $prestation->viabilite }}</td>
-                                                    <td>{{ $prestation->delai_realisation }}</td>
-                                                    <td>{{ $prestation->orientation }}</td>
-                                                    <td>{{ $prestation->libelle ? $beneficiaire->libelle : ""}}</td>
-                                                    <td>{{ $prestation->date_debut }}</td>
-                                                    <td>{{ $prestation->date_fin }}</td>
-                                                    <td>Rendez vous en cours</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        @empty
-                                            <p>Aucune prestation</p>
-                                        @endforelse
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    @endif
 
 @endsection
 
 @section('script')
+    <script src="{{ URL::asset('assets/libs/datatables/datatables.min.js')}}"></script>
 
+    <script src="{{ URL::asset('assets/js/pages/datatables.init.js')}}"></script>
+
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.sa-warning').click(function () {
+            var url = '{{ url('/parcours/:parcours')}}';
+            url = url.replace(':parcours', $(this).attr('id'));
+            var row = $(this).closest(".card")
+
+            Swal.fire({
+                title: "Voulez vous supprimer ce parcours ?",
+                text: "Vous ne pourrez pas revenir en arrière !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Supprimer",
+                cancelButtonText: "Annuler"
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: url,
+                        method : "delete",
+                        success: function (data) {
+                            row.remove();
+                            if($('#accordion').html().trim() === $('<div id="accordion"></div>').html()) $("#displayParcours").remove();
+                        },
+                        error: function (data) {
+                            console.log("fail" + data);
+                        }
+                    });
+                    Swal.fire("Supprimé !", "Le parcours a été supprimé.", "success");
+                }
+            });
+        });
+
+        $('.btn.btn-warning').click(function () {
+            console.log("dede", $(this).data('model'), $(this).data('action'), $(this).data('id'))
+            var url = '{{ url('/prestations/modal/:prestation')}}';
+            url = url.replace(':prestation', $(this).data('id'));
+            console.log(url)
+            //return
+            $.ajax({
+                url: url,
+                method : "get",
+                success: function (data) {
+                    $('#modal-wrapper .modal-lg-content .modal-dialog').html(data);
+                    $(".modal-lg-content").modal();
+                },
+                error: function (data) {
+                    console.log("fail" + data);
+                }
+            });
+
+            return;
+        });
+    </script>
 @endsection
+
+{{--
+https://makitweb.com/dynamically-load-content-in-bootstrap-modal-with-ajax/
+
+--}}

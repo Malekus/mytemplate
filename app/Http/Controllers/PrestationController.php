@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Beneficiaire;
 use App\Http\Requests\PrestationRequest;
 use App\Prestation;
 use App\Parcours;
+use App\Rdv;
 
 class PrestationController extends Controller
 {
@@ -16,7 +18,8 @@ class PrestationController extends Controller
 
     public function show($id)
     {
-        $prestation = Prestation::find($id);
+        $prestation = Prestation::find( $id);
+        $rdv = Rdv::find(5);
         return view('prestation.show', compact('prestation'));
     }
 
@@ -29,7 +32,7 @@ class PrestationController extends Controller
     {
         $prestation = new Prestation($request->all());
         $prestation->save();
-        return redirect(route('beneficiaires.show', ['beneficiaire' => Parcours::find($request->get('parcours_id'))->beneficiaire->id]));
+        return redirect(route('beneficiaires.show', ['beneficiaire' => Parcours::find($request->get('parcour_id'))->beneficiaire->id]));
     }
 
     public function edit($id)
@@ -50,4 +53,11 @@ class PrestationController extends Controller
         Prestation::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function manage($id)
+    {
+        $prestation = Prestation::findOrFail($id);
+        return view('prestation.modal', compact('prestation'));
+    }
+
 }

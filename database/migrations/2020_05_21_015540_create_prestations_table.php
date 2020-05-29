@@ -25,8 +25,9 @@ class CreatePrestationsTable extends Migration
             $table->string('libelle')->nullable();
             $table->date('date_debut');
             $table->date('date_fin')->nullable();
-            $table->integer('parcours_id')->unsigned()->index();
-            $table->foreign('parcours_id')->references('id')->on('parcours')->onDelete('cascade');
+            $table->integer('rdv_max')->default(5);
+            $table->integer('parcour_id')->unsigned()->index();
+            $table->foreign('parcour_id')->references('id')->on('parcours')->onDelete('cascade');
             $table->timestamps();
         });
     }

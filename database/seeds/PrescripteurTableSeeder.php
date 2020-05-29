@@ -12,7 +12,7 @@ class PrescripteurTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Prescripteur::class, rand(100, 300))->create();
+        factory(Prescripteur::class, 100)->create();
     }
 }
 

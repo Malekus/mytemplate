@@ -12,4 +12,9 @@ class Prestation extends Model
     {
         return $this->belongsTo(Parcours::class);
     }
+
+    public function rendezvous()
+    {
+        return $this->hasMany(Rdv::class);
+    }
 }

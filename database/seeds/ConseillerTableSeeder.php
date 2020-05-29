@@ -12,7 +12,7 @@ class ConseillerTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Conseiller::class, rand(100, 110))->create();
+        factory(Conseiller::class, 100)->create();
     }
 }
 

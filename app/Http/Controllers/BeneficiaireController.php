@@ -8,10 +8,18 @@ use App\Parcours;
 use App\Prescripteur;
 use App\Projet;
 use App\Referent;
+use App\Services\ParcoursService;
 use Illuminate\Http\Request;
 
 class BeneficiaireController extends Controller
 {
+    private $parcoursService;
+
+    public function __construct(ParcoursService $service)
+    {
+        $this->parcoursService = $service;
+    }
+
     public function index()
     {
         $beneficiaires = Beneficiaire::with('parcours')->get();
@@ -21,6 +29,7 @@ class BeneficiaireController extends Controller
     public function show($id)
     {
         $beneficiaire = Beneficiaire::find($id);
+        //dd($beneficiaire, $beneficiaire->parcours[0]->prestations);
         return view('beneficiaire.show', compact('beneficiaire'));
     }
 
@@ -72,51 +81,23 @@ class BeneficiaireController extends Controller
 
     public function storeParcours(Request $request)
     {
-        $arrayprescripteur = ["referent_id", "nom", "adresse", "code_postal", "ville", "tel", "email", "website"];
+        //dd($request->get('beneficiaire_id'));
         $parcours = new Parcours(['beneficiaire_id' => $request->get('beneficiaire_id')]);
 
-        if (!empty($request->get('projet_id_projet'))) {
+        if (!empty($request->get('projet_id_projet')))
             $parcours->projet()->associate(Projet::find($request->get('projet_id_projet')));
+        else
+            $this->parcoursService->addProjectToParcours($parcours, $request->all());
 
-        } else {
-            $model = array_values(array_filter($request->all(), function ($key) {
-                return !strpos($key, '_projet') === false;
-            }, ARRAY_FILTER_USE_KEY));
-            $keys = str_ireplace('_projet', '', array_keys($model));
-            $values = array_values($model);
-            $projet = Projet::create(array_combine($keys, $values));
-            $parcours->projet()->associate($projet);
-        }
-
-        if (!empty($request->get('conseiller_id_conseiller'))) {
+        if (!empty($request->get('conseiller_id_conseiller')))
             $parcours->conseiller()->associate(Conseiller::find($request->get('conseiller_id_conseiller')));
-        } else {
-            $model = array_values(array_filter($request->all(), function ($key) {
-                return !strpos($key, '_conseiller') === false;
-            }, ARRAY_FILTER_USE_KEY));
-            $keys = str_ireplace('_conseiller', '', array_keys($model));
-            $values = array_values($model);
-            $conseiller = Projet::create(array_combine($keys, $values));
-            $parcours->conseiller()->associate($conseiller);
-        }
+        else
+            $this->parcoursService->addConseillerToParcours($parcours, $request->all());
 
-        if (!empty($request->get('prescripteur_id_prescripteur'))) {
+        if (!empty($request->get('prescripteur_id_prescripteur')))
             $parcours->prescripteur()->associate(Prescripteur::find($request->get('prescripteur_id_prescripteur')));
-        } else {
-            $model = array_values(array_filter($request->all(), function ($key) {
-                return !strpos($key, '_prescripteur') === false;
-            }, ARRAY_FILTER_USE_KEY));
-            $keys = str_ireplace('_prescripteur', '', array_keys($model));
-            $values = array_values($model);
-            //$prescripteur = Prescripteur::create(array_combine($keys, $values));
-            $prescripteur = Prescripteur::create(["nom" => "FakeName", "adresse" => "131 avenue de gaule",
-                "code_postal" => "93240", "ville" => "Courbevoie", "tel" => "0123456789",
-                "email" => "dede@toto.fr", "website" => "fakename.com",
-                "referent_id" => Referent::all()->random()->id]);
-            $parcours->prescripteur()->associate($prescripteur);
-        }
-
-
+        else
+            $this->parcoursService->addPrescripteurToParcours($parcours, $request->all());
 
         $parcours->save();
         return redirect(route('beneficiaires.show', ['beneficiaire' => $request->get('beneficiaire_id')]));

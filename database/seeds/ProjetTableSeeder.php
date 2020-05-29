@@ -12,7 +12,7 @@ class ProjetTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Projet::class, rand(100, 300))->create();
+        factory(Projet::class, 100)->create();
     }
 }
 

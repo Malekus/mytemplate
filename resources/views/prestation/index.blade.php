@@ -22,7 +22,7 @@
                         <i class="mdi mdi-settings mr-2"></i> Actions
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('prestations.create') }}">Ajouter un parcours</a>
+                        <a class="dropdown-item" href="{{ route('prestations.create.parcours', 5) }}">Ajouter un parcours</a>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 <?php
 
-use App\Referent;
+use App\Rdv;
 use Illuminate\Database\Seeder;
 
-class ReferentTableSeeder extends Seeder
+class RdvTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,9 +12,9 @@ class ReferentTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Referent::class, 100)->create();
+        factory(Rdv::class, 200)->create();
     }
 }
 
 
-// Referent::create([]);
+// Rdv::create([]);

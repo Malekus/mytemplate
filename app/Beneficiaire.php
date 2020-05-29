@@ -26,11 +26,21 @@ class Beneficiaire extends Model
 
     public function setNomAttribute($value)
     {
-        $this->attributes['nom'] = ucfirst($value);
+        $this->attributes['nom'] = mb_strtolower($value);
+    }
+
+    public function getNomAttribute($value)
+    {
+        return strtoupper($value);
     }
 
     public function setPrenomAttribute($value)
     {
-        $this->attributes['prenom'] = ucfirst($value);
+        $this->attributes['prenom'] = mb_strtolower($value);
+    }
+
+    public function getPrenomAttribute($value)
+    {
+        return mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
     }
 }

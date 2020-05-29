@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')
+    ->name('home');
 
 Auth::routes();
 
@@ -39,13 +40,23 @@ Route::resource('projets', 'ProjetController');
 
 Route::resource('parcours', 'ParcoursController');
 
-Route::resource('prestations', 'PrestationController');
+Route::resource('prestations', 'PrestationController')
+    ->except(['create']);
 
 Route::get('/prestations/{parcours}/create', 'PrestationController@create')
     ->name('prestations.create.parcours');
 
+Route::get('/prestations/modal/{prestation}', 'PrestationController@manage')
+    ->name('prestations.manage');
 
+Route::get('/modals/{model}/{action}/{id}', 'Modalcontroller@show')
+    ->name('modals.show');
 
+Route::resource('rdvs', 'RdvController')
+    ->except(['create']);
+
+Route::get('/rdv/{prestation}/create', 'RdvController@create')
+    ->name('rdvs.create.prestations');
 
 /*
 Route::get('/beneficiaires', 'BeneficiaireController@index')

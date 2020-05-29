@@ -18,6 +18,6 @@ $factory->define(Prestation::class, function (Faker $faker) {
         'libelle' => $faker->paragraph($nbSentences = 1, $variableNbSentences = true),
         'date_debut' => $faker->dateTimeBetween($startDate = '-10 years', $endDate = '-7 years', $timezone = null),
         'date_fin' => $faker->dateTimeBetween($startDate = '-2 years', $endDate = 'now', $timezone = null),
-        'parcours_id' => Parcours::all()->random()->id
+        'parcour_id' => Parcours::all()->random()->id
     ];
 });

@@ -30,6 +30,6 @@ class Parcours extends Model
 
     public function prestations()
     {
-        return $this->hasMany(Prestation::class);
+        return $this->hasMany(Prestation::class, 'parcour_id');
     }
 }

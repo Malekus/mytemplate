@@ -18,6 +18,11 @@ class Conseiller extends Model
         return $this->hasMany(Parcours::class);
     }
 
+    public function rendezvous()
+    {
+        return $this->hasMany(Rdv::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->nom . ' ' . $this->prenom;

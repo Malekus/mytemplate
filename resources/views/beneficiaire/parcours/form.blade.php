@@ -29,6 +29,8 @@
                 </div>
             </div>
 
+            {!! Form::hidden('beneficiaire_id_projet', $beneficiaire, ['class' => 'form-control', 'required']) !!}
+
             <div class="form-group row">
                 {!! Form::label('intitule_projet', 'Intitulé', ['class' => 'col-sm-2 col-form-label']) !!}
                 <div class="col-sm-10">

@@ -11,7 +11,7 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="page-title-box">
-                <h4 class="font-size-18">Bénéficiaire</h4>
+                <h4 class="font-size-18">Prescripteur</h4>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
                         <i class="mdi mdi-settings mr-2"></i> Actions
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('beneficiaires.create') }}">Ajouter un bénéficiare</a>
+                        <a class="dropdown-item" href="{{ route('prescripteurs.create') }}">Ajouter un prescripteur</a>
                     </div>
                 </div>
             </div>
@@ -35,32 +35,30 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Bénéficiare enregistré</h4>
+                    <h4 class="card-title">Prescripteur enregistré</h4>
 
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Téléphone</th>
-                                <th>Ville</th>
-                                <th>Territoire</th>
-                                <th>Actions</th>
-                            </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Téléphone</th>
+                            <th>Mail</th>
+                            <th>Site internet</th>
+                            <th>Actions</th>
+                        </tr>
                         </thead>
 
                         <tbody>
-                        @foreach($beneficiaires as $beneficiaire)
+                        @foreach($prescripteurs as $prescripteur)
                             <tr>
-                                <td>{{ $beneficiaire->nom }}</td>
-                                <td>{{ $beneficiaire->prenom }}</td>
-                                <td>{{ $beneficiaire->tel }}</td>
-                                <td>{{ $beneficiaire->ville }}</td>
-                                <td>{{ $beneficiaire->territoire }}</td>
+                                <td>{{ $prescripteur->nom }}</td>
+                                <td>{{ $prescripteur->tel }}</td>
+                                <td>{{ $prescripteur->email }}</td>
+                                <td>{{ $prescripteur->website }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-success" href="{{ route("beneficiaires.show", $beneficiaire) }}">Afficher</a>
-                                    <a class="btn btn-primary" href="{{ route("beneficiaires.edit", $beneficiaire) }}">Modifier</a>
-                                    <button class="btn btn-danger sa-warning" id="{{ $beneficiaire->id }}">Supprimer</button>
+                                    <a class="btn btn-success" href="{{ route("prescripteurs.show", $prescripteur) }}">Afficher</a>
+                                    <a class="btn btn-primary" href="{{ route("prescripteurs.edit", $prescripteur) }}">Modifier</a>
+                                    <button class="btn btn-danger sa-warning" id="{{ $prescripteur->id }}">Supprimer</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -81,6 +79,7 @@
     <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
 
     <script>
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -88,12 +87,12 @@
         });
 
         $('.sa-warning').click(function () {
-            var url = '{{ url('/beneficiaires/:beneficiaire')}}';
-            url = url.replace(':beneficiaire', $(this).attr('id'));
+            var url = '{{ url('/prescripteurs/:prescripteur')}}';
+            url = url.replace(':prescripteur', $(this).attr('id'));
             var row = $(this).closest("tr")
 
             Swal.fire({
-                title: "Voulez vous supprimer cette personne ?",
+                title: "Voulez vous supprimer ce prescripteur ?",
                 text: "Vous ne pourrez pas revenir en arrière !",
                 type: "warning",
                 showCancelButton: true,
@@ -113,7 +112,7 @@
                             console.log("fail" + data);
                         }
                     })
-                    Swal.fire("Supprimé !", "La personne a été supprimé.", "success");
+                    Swal.fire("Supprimé !", "Le prescripteur a été supprimé.", "success");
                 }
             });
         });

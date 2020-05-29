@@ -35,14 +35,21 @@
             <!-- Start right Content here -->
             <!-- ============================================================== -->
             <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    @yield('content')
+                <div class="page-content">
+                    <div class="container-fluid">
+                        @yield('content')
+                    </div>
+                    <!-- container-fluid -->
                 </div>
-                <!-- container-fluid -->
-            </div>
-            <!-- End Page-content -->
-            @include('layouts.footer')
+                <!-- End Page-content -->
+                <!-- Begin Modal -->
+                <div id="modal-wrapper">
+                    <div class="modal fade modal-lg-content" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-xl"></div>
+                    </div>
+                </div>
+                <!-- End Modal -->
+                @include('layouts.footer')
             </div>
             <!-- end main content-->
     </div>
