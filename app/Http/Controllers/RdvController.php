@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RdvRequest;
 use App\Conseiller;
+use App\Http\Requests\RdvRequest;
+use App\Prestation;
 use App\Rdv;
 
 class RdvController extends Controller
@@ -28,22 +29,28 @@ class RdvController extends Controller
 
     public function store(RdvRequest $request)
     {
-        $rdv = new Rdv($request->all());
+        //dd($request->all());
+        $rdv = new Rdv($request->except(['prestation_id', 'conseiller_id']));
+        $rdv->prestation()->associate(Prestation::find($request->get('prestation_id')));
+        $rdv->conseiller()->associate(Conseiller::find($request->get('conseiller_id')));
         $rdv->save();
-        return redirect(route('rdvs.show', ['rdv' => $rdv]));
+        return redirect(route('prestations.show', ['prestation' => $request->get('prestation_id')]));
     }
 
     public function edit($id)
     {
         $rdv = Rdv::find($id);
-        return view('rdv.edit', compact('rdv'));
+        $conseillers = Conseiller::all()->pluck('full_name', 'id');
+        return view('rdv.edit', ['conseillers' => $conseillers, 'rdv' => $rdv]);
     }
 
     public function update(RdvRequest $request, $id)
     {
         $rdv = Rdv::findOrFail($id);
-        $rdv->update($request->all());
-        return redirect(route('rdvs.show', $id));
+        //dd($request->all());
+        $rdv->update($request->except('conseiller_id'));
+        $rdv->conseiller()->associate(Conseiller::find($request->get('conseiller_id')));
+        return redirect(route('prestations.show', ['prestation' => $rdv->prestation->id]));
     }
 
     public function destroy($id)

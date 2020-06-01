@@ -29,7 +29,6 @@ class BeneficiaireController extends Controller
     public function show($id)
     {
         $beneficiaire = Beneficiaire::find($id);
-        //dd($beneficiaire, $beneficiaire->parcours[0]->prestations);
         return view('beneficiaire.show', compact('beneficiaire'));
     }
 
@@ -49,6 +48,13 @@ class BeneficiaireController extends Controller
     {
         $beneficiaire = Beneficiaire::find($id);
         return view('beneficiaire.edit', compact('beneficiaire'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $beneficiaire = Beneficiaire::findOrFail($id);
+        $beneficiaire->update($request->all());
+        return redirect(route('beneficiaires.show', $beneficiaire));
     }
 
     public function destroy($id)

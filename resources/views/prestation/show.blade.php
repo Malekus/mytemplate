@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
-
+    <link href="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
     </div> <!-- end row -->
 
     @if($prestation->rendezvous->count() !== 0)
-        <div class="row">
+        <div class="row" id="displayRdvs">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -110,8 +110,9 @@
                                     <td>{{ $rdv->rang_rdv }}</td>
                                     <td>{{ $rdv->rang_rdv_p }}</td>
                                     <td>{{ $rdv->getNbrdv() }} - {{ $rdv->prestation->id }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">Modifier</button>
+                                    <td class="text-center">
+                                        <a class="btn btn-primary" href="{{ route("rdvs.edit", $rdv) }}">Modifier</a>
+                                        <button class="btn btn-danger sa-warning" id="{{ $rdv->id }}">Supprimer</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -127,5 +128,46 @@
 @endsection
 
 @section('script')
+    <script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('.sa-warning').click(function () {
+            let url = '{{ url('/rdvs/:rdv')}}';
+            url = url.replace(':rdv', $(this).attr('id'));
+            let row = $(this).closest("tr");
+
+            Swal.fire({
+                title: "Voulez vous supprimer ce rendez-vous ?",
+                text: "Vous ne pourrez pas revenir en arrière !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Supprimer",
+                cancelButtonText: "Annuler"
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: url,
+                        method : "delete",
+                        success: function (data) {
+                            row.remove();
+                            if($('#displayRdvs tbody').html().trim() === "") $("#displayRdvs").remove();
+
+                        },
+                        error: function (data) {
+                            console.log("fail" + data);
+                        }
+                    });
+                    Swal.fire("Supprimé !", "Le rendez-vous a été supprimé.", "success");
+                }
+            });
+        });
+    </script>
 @endsection

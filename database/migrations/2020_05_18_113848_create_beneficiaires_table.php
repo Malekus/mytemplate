@@ -13,7 +13,7 @@ class CreateBeneficiairesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Beneficiaires', function (Blueprint $table) {
+        Schema::create('beneficiaires', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
             $table->string('prenom');
@@ -38,6 +38,6 @@ class CreateBeneficiairesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Beneficiaires');
+        Schema::dropIfExists('beneficiaires');
     }
 }

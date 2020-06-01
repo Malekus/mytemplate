@@ -18,7 +18,7 @@ class CreateRdvsTable extends Migration
             $table->date('date_rdv');
             $table->time('heure_debut');
             $table->time('heure_fin');
-            $table->string('libelle');
+            $table->string('libelle')->nullable();
             $table->string('status')->default("Présent");
             $table->string('motif_abs')->nullable();
             $table->integer('rang_rdv');

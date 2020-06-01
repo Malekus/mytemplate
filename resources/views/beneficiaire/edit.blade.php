@@ -21,7 +21,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::model($beneficiaire, ['method' => 'POST', 'url' => route('beneficiaires.store'), 'class' => 'custom-validation']) !!}
+                    {!! Form::model($beneficiaire, ['method' => 'PUT', 'url' => route('beneficiaires.update', $beneficiaire), 'class' => 'custom-validation']) !!}
 
                     @include('beneficiaire.form', $beneficiaire)
 

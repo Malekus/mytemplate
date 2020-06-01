@@ -8,6 +8,19 @@ class Rdv extends Model
 {
     protected $guarded = ['id'];
 
+    /*
+    protected $fillable = [
+        'date_rdv',
+        'heure_debut',
+        'heure_fin',
+        'libelle',
+        'status',
+        'motif_abs',
+        'rang_rdv',
+        'rang_rdv_p'
+    ];
+    */
+
     public function prestation()
     {
         return $this->belongsTo(Prestation::class);

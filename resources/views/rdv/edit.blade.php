@@ -10,7 +10,7 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="page-title-box">
-                <h4 class="font-size-18">Modifier un prescripteur</h4>
+                <h4 class="font-size-18">Modifier le rendez-vous</h4>
             </div>
         </div>
 
@@ -21,9 +21,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::model($prescripteur, ['method' => 'PUT', 'url' => route('prescripteurs.update', $prescripteur->id), 'class' => 'custom-validation']) !!}
+                    {!! Form::model($rdv, ['method' => 'PUT', 'url' => route('rdvs.update', $rdv), 'class' => 'custom-validation']) !!}
 
-                    @include('prescripteur.form', $prescripteur)
+                    @include('rdv.form', $rdv)
 
                     <div class="form-group mb-0">
                         <div class="text-center">
