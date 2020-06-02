@@ -10,7 +10,7 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="page-title-box">
-                <h4 class="font-size-18">{{ $prescripteur->nom }} {{ $prescripteur->prenom }} </h4>
+                <h4 class="font-size-18">Rendez-vous {{ $rdv->id }}</h4>
             </div>
         </div>
 
@@ -22,8 +22,6 @@
                         <i class="mdi mdi-settings mr-2"></i> Actions
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('prescripteurs.edit', $prescripteur) }}">Modifier le prescripteur</a>
-                        <a class="dropdown-item" href="#">Ajouter un X</a>
                         <a class="dropdown-item" href="#">Another action</a>
                     </div>
                 </div>
@@ -36,7 +34,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-
+                    <p>{{ $rdv->conseiller->full_name }}</p>
+                    <hr>
+                    <p>{{ $rdv }}</p>
                 </div>
             </div>
         </div> <!-- end col -->

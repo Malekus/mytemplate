@@ -13,7 +13,7 @@ $factory->define(Rdv::class, function (Faker $faker) {
         'heure_debut' => $faker->time,
         'heure_fin' => $faker->time,
         'libelle' => $faker->numberBetween($min = 10000, $max = 90000) . '_' . strtoupper($faker->word) . "_" . strtoupper($faker->name),
-        'status' => $faker->randomElement(["Présent", "Absent excusé", "Absent non excusé", "Pas de réponse"]),
+        'statut' => $faker->randomElement(["Présent", "Absent excusé", "Absent non excusé", "Pas de réponse"]),
         'motif_abs' => $faker->text($maxNbChars = 20),
         'rang_rdv' => $faker->numberBetween($min = 0, $max = 9),
         'rang_rdv_p' => $faker->numberBetween($min = 0, $max = 9),

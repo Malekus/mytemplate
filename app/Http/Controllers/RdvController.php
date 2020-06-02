@@ -6,6 +6,7 @@ use App\Conseiller;
 use App\Http\Requests\RdvRequest;
 use App\Prestation;
 use App\Rdv;
+use Illuminate\Http\Request;
 
 class RdvController extends Controller
 {
@@ -44,12 +45,13 @@ class RdvController extends Controller
         return view('rdv.edit', ['conseillers' => $conseillers, 'rdv' => $rdv]);
     }
 
-    public function update(RdvRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $rdv = Rdv::findOrFail($id);
         //dd($request->all());
+        $rdv = Rdv::findOrFail($id);
         $rdv->update($request->except('conseiller_id'));
         $rdv->conseiller()->associate(Conseiller::find($request->get('conseiller_id')));
+        //dd($rdv);
         return redirect(route('prestations.show', ['prestation' => $rdv->prestation->id]));
     }
 

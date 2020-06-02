@@ -105,7 +105,7 @@
                                     <td>{{ $rdv->heure_fin }}</td>
                                     <td>{{ $rdv->conseiller->full_name }}</td>
                                     <td>{{ $rdv->libelle }}</td>
-                                    <td>{{ $rdv->status }}</td>
+                                    <td>{{ $rdv->statut }}</td>
                                     <td>{{ $rdv->motif_abs }}</td>
                                     <td>{{ $rdv->rang_rdv }}</td>
                                     <td>{{ $rdv->rang_rdv_p }}</td>

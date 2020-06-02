@@ -46,6 +46,7 @@
         {!! Form::date('date_fin', null, ['class' => 'form-control']) !!}
     </div>
 </div>
+
 <div class="form-group row">
     {!! Form::label('statut', 'Statut', ['class' => 'col-sm-2 col-form-label']) !!}
     <div class="col-sm-10">
