@@ -22,7 +22,7 @@
                         <i class="mdi mdi-settings mr-2"></i> Actions
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('rdvs.create.prestations', $prestation) }}">Ajouter un rendez-vous</a>
+                        <a class="dropdown-item" href="{{ route('rdvs.create.prestations', $prestation->id) }}">Ajouter un rendez-vous</a>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                                     <td>{{ $rdv->motif_abs }}</td>
                                     <td>{{ $rdv->rang_rdv }}</td>
                                     <td>{{ $rdv->rang_rdv_p }}</td>
-                                    <td>{{ $rdv->getNbrdv() }} - {{ $rdv->prestation->id }}</td>
+                                    <td>{{ $rdv->getNbRdv() }} - {{ $rdv->prestation->id }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-primary" href="{{ route("rdvs.edit", $rdv) }}">Modifier</a>
                                         <button class="btn btn-danger sa-warning" id="{{ $rdv->id }}">Supprimer</button>

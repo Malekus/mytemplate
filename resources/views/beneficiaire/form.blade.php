@@ -61,7 +61,7 @@
 <div class="form-group row">
     {!! Form::label('qpv', 'QPV', ['class' => 'col-sm-2 col-form-label']) !!}
     <div class="col-sm-10">
-        {!! Form::select('qpv', ['NSP' => 'NSP', 'Oui' => 'Oui', 'Non' => 'Non'], 'NSP', ['class' => 'form-control']) !!}
+        {!! Form::select('qpv', ['NSP' => 'NSP', 'Oui' => 'Oui', 'Non' => 'Non'], $beneficiaire->qpv ? $beneficiaire->qpv : 'NSP', ['class' => 'form-control']) !!}
     </div>
 </div>
 <div class="form-group row">

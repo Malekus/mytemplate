@@ -18,8 +18,7 @@ class PrestationController extends Controller
 
     public function show($id)
     {
-        $prestation = Prestation::find( $id);
-        $rdv = Rdv::find(5);
+        $prestation = Prestation::find($id);
         return view('prestation.show', compact('prestation'));
     }
 
