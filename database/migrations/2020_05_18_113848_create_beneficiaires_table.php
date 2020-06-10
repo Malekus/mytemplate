@@ -21,7 +21,7 @@ class CreateBeneficiairesTable extends Migration
             $table->string('tel')->nullable();
             $table->string('email')->nullable();
             $table->string('adresse')->nullable();
-            $table->string('code_postale')->nullable();
+            $table->string('code_postal')->nullable();
             $table->string('ville')->nullable();
             $table->string('region')->nullable();
             $table->string('pays')->nullable();

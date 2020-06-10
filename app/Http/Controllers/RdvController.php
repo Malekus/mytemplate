@@ -47,10 +47,10 @@ class RdvController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
         $rdv = Rdv::findOrFail($id);
         $rdv->update($request->except('conseiller_id'));
         $rdv->conseiller()->associate(Conseiller::find($request->get('conseiller_id')));
+        $rdv->save();
         //dd($rdv, $rdv->isDirty("conseiller_id"));
         return redirect(route('prestations.show', ['prestation' => $rdv->prestation->id]));
     }

@@ -44,23 +44,16 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-group">
-                                <li class="list-group-item"><strong>Nom</strong> : {{ $beneficiaire->nom }}</li>
-                                <li class="list-group-item"><strong>Prénom</strong> : {{ $beneficiaire->prenom }}</li>
-                                <li class="list-group-item"><strong>Civilité</strong> : {{ $beneficiaire->civilite }}
-                                </li>
+                                <li class="list-group-item"><strong>Nom du bénéficiaire</strong> : {{ $beneficiaire->civilite }} {{ $beneficiaire->full_name }}</li>
                                 <li class="list-group-item"><strong>Téléphone</strong> : {{ $beneficiaire->tel }}</li>
                                 <li class="list-group-item"><strong>Email</strong> : {{ $beneficiaire->email }}</li>
-                                <li class="list-group-item"><strong>Adresse</strong> : {{ $beneficiaire->adresse }}</li>
                             </ul>
                         </div>
                         <div class="col-6">
                             <ul class="list-group">
-                                <li class="list-group-item"><strong>Entreprise</strong> : {{ $beneficiaire->nom }}</li>
                                 <li class="list-group-item"><strong>Crée le</strong> : {{ \Carbon\Carbon::parse($beneficiaire->created_at)->format('d/m/Y') }}</li>
                                 <li class="list-group-item"><strong>Dernière activité</strong> : {{ \Carbon\Carbon::parse($beneficiaire->updated_at)->format('d/m/Y') }}</li>
                                 <li class="list-group-item"><strong>Nombre de parcours</strong> : {{ $beneficiaire->parcours->count() }}</li>
-                                <li class="list-group-item"><strong>Nombre de prestations</strong> : X</li>
-                                <li class="list-group-item"><strong>Nombre de rendez-vous</strong> : X</li>
                             </ul>
                         </div>
                     </div>
@@ -75,23 +68,40 @@
             <div class="card">
                 <div class="card-body">
 
-                    <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                    <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home2" role="tab">
+                            <a class="nav-link active" data-toggle="tab" href="#tabProjet" role="tab">
                                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                                <span class="d-none d-sm-block">Projets</span>
+                                <span class="d-none d-sm-block mx-4">Projets</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile2" role="tab">
+                            <a class="nav-link" data-toggle="tab" href="#tabEntreprise" role="tab">
                                 <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                <span class="d-none d-sm-block">Entreprises</span>
+                                <span class="d-none d-sm-block mx-4">Entreprises</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabParcours" role="tab">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block mx-4">Parcours</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabPrestation" role="tab">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block mx-4">Prestations</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabRdv" role="tab">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block mx-4">Rendez-vous</span>
                             </a>
                         </li>
                     </ul>
-
                     <div class="tab-content">
-                        <div class="tab-pane active p-3" id="home2" role="tabpanel">
+                        <div class="tab-pane active p-3" id="tabProjet" role="tabpanel">
                             @if ($beneficiaire->projets->count() !== 0)
                                 <table class="table table-bordered mb-0">
                                     <thead>
@@ -127,15 +137,58 @@
                                 Aucun projet
                             @endif
                         </div>
-                        <div class="tab-pane p-3" id="profile2" role="tabpanel">
+                        <div class="tab-pane p-3" id="tabEntreprise" role="tabpanel">
                             @if (isset($beneficiaire->entreprises))
                                 {{ $beneficiaire->entreprises }}
                             @else
                                 Aucun entreprise
                             @endif
                         </div>
+                        <div class="tab-pane p-3" id="tabParcours" role="tabpanel">
+                            @if (isset($beneficiaire->parcours))
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Projet</th>
+                                        <th>Conseiller</th>
+                                        <th>Prescripteur</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($beneficiaire->parcours as $parcours)
+                                            <tr>
+                                                <td>{{ $parcours->projet->intitule }}</td>
+                                                <td>{{ $parcours->conseiller->full_name }}</td>
+                                                <td>{{ $parcours->prescripteur->full_name }}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-success" href="{{ route("beneficiaires.show", $beneficiaire) }}">Afficher</a>
+                                                    <a class="btn btn-primary" href="{{ route("beneficiaires.edit", $beneficiaire) }}">Modifier</a>
+                                                    <button class="btn btn-danger sa-warning" id="{{ $beneficiaire->id }}">Supprimer</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                Aucun parcours
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabPrestation" role="tabpanel">
+                            @if (isset($beneficiaire->entreprises))
+                                {{ $beneficiaire->entreprises }}
+                            @else
+                                Aucune prestation
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabRdv" role="tabpanel">
+                            @if (isset($beneficiaire->entreprises))
+                                {{ $beneficiaire->entreprises }}
+                            @else
+                                Aucun rendez-vous
+                            @endif
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -7,7 +7,8 @@ use Illuminate\Support\Carbon;
 
 class Beneficiaire extends Model
 {
-    protected $fillable = ['nom', 'prenom', 'civilite', 'tel', 'email', 'adresse', 'code_postale', 'ville', 'region', 'pays', 'qpv'];
+    //protected $fillable = ['nom', 'prenom', 'civilite', 'tel', 'email', 'adresse', 'code_postal', 'ville', 'region', 'pays', 'qpv'];
+    protected $guarded = ['id'];
 
     public function parcours()
     {

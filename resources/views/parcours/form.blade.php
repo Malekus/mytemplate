@@ -57,9 +57,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                {!! Form::label('code_postale_beneficiaire', 'Code Postale', ['class' => 'col-sm-2 col-form-label']) !!}
+                {!! Form::label('code_postal_beneficiaire', 'Code Postale', ['class' => 'col-sm-2 col-form-label']) !!}
                 <div class="col-sm-10">
-                    {!! Form::text('code_postale_beneficiaire', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('code_postal_beneficiaire', null, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="form-group row">

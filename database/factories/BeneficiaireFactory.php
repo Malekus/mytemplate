@@ -13,7 +13,7 @@ $factory->define(Beneficiaire::class, function (Faker $faker) {
     'tel' => $faker->phoneNumber,
     'email' => $faker->email,
     'adresse' => $faker->address,
-    'code_postale' => $faker->postcode,
+    'code_postal' => $faker->postcode,
     'ville' => $faker->city,
     'region' => $faker->name,
     'pays' => $faker->country,
