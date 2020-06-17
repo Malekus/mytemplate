@@ -83,3 +83,4 @@ Route::delete('/beneficiaire', 'BeneficiaireController@destroy')
 */
 // Route::get('{any}', 'VeltrixController@index');
 
+Route::resource('organisations', 'OrganisationController');

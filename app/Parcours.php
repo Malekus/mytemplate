@@ -32,4 +32,6 @@ class Parcours extends Model
     {
         return $this->hasMany(Prestation::class, 'parcour_id');
     }
+
+    
 }

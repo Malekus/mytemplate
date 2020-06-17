@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ProjetTableSeeder::class,
             ParcoursTableSeeder::class,
             PrestationTableSeeder::class,
-            RdvTableSeeder::class
+            RdvTableSeeder::class,
+            OrganisationTableSeeder::class
         ]);
     }
 }
