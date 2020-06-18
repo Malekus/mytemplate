@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ParcoursTableSeeder::class,
             PrestationTableSeeder::class,
             RdvTableSeeder::class,
-            OrganisationTableSeeder::class
+            OrganisationTableSeeder::class,
+            OrganisationParcourSeeder::class,
         ]);
     }
 }
