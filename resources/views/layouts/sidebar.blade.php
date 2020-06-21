@@ -16,16 +16,32 @@
             </li>
 
             <li>
-                <a href="{{ route('parcours.index') }}" class=" waves-effect">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Parcours</span>
+                <a href="{{ route('beneficiaires.index') }}" class=" waves-effect">
+                    <i class="fas fa-users"></i>
+                    <span>Bénéficiaire</span>
                 </a>
             </li>
 
             <li>
-                <a href="{{ route('beneficiaires.index') }}" class=" waves-effect">
-                    <i class="fas fa-users"></i>
-                    <span>Bénéficiaire</span>
+                <a href="{{ route('personnes.index') }}" class=" waves-effect">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Personne</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('organisations.index') }}" class=" waves-effect">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Organisation</span>
+                </a>
+            </li>
+
+
+
+            <li>
+                <a href="{{ route('parcours.index') }}" class=" waves-effect">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Parcours</span>
                 </a>
             </li>
 
@@ -65,7 +81,7 @@
             </li>
 
             <li>
-                <a href="#" class=" waves-effect">
+                <a href="{{ route('configurations.index') }}" class=" waves-effect">
                     <i class="fas fa-cogs"></i>
                     <span>Configuration</span>
                 </a>

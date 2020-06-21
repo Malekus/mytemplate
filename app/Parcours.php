@@ -8,10 +8,12 @@ class Parcours extends Model
 {
     protected $guarded = ['id'];
 
+    /*
     public function beneficiaire()
     {
         return $this->belongsTo(Beneficiaire::class);
     }
+    */
 
     public function projet()
     {
@@ -33,5 +35,14 @@ class Parcours extends Model
         return $this->hasMany(Prestation::class, 'parcour_id');
     }
 
-    
+    public function organisations()
+    {
+        return $this->belongsToMany(Organisation::class);
+    }
+
+    public function personnes()
+    {
+        return $this->belongsToMany(Personne::class);
+    }
+
 }

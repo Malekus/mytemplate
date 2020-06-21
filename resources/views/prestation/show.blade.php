@@ -28,7 +28,7 @@
             </div>
 
             <div class="float-right d-none d-md-block ml-2">
-                <a class="btn btn-info" href="{{ route('beneficiaires.show', $prestation->parcour->beneficiaire->id) }}">Retourner au bénéficiaire</a>
+                <a class="btn btn-info" href="{{ route('beneficiaires.show', $prestation->parcour->projet->beneficiaire->id) }}">Retourner au bénéficiaire</a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class="col-6">
                             <ul class="list-group">
-                                <li class="list-group-item"><strong>Nom du bénéficiaire</strong> : {{ $prestation->parcour->beneficiaire->full_name }}</li>
+                                <li class="list-group-item"><strong>Nom du bénéficiaire</strong> : {{ $prestation->parcour->projet->beneficiaire->full_name }}</li>
                                 <li class="list-group-item"><strong>dispositif</strong> : {{ $prestation->dispositif }}
                                 </li>
                                 <li class="list-group-item"><strong>statut</strong> : {{ $prestation->statut }}</li>
@@ -87,7 +87,6 @@
                                 <th>Date du rendez-vous</th>
                                 <th>Heure Début</th>
                                 <th>Heure Fin</th>
-                                <th>Conseiller</th>
                                 <th>Libellé</th>
                                 <th>Statut</th>
                                 <th>Motif absence</th>
@@ -103,7 +102,6 @@
                                     <td>{{ $rdv->date_rdv }}</td>
                                     <td>{{ $rdv->heure_debut }}</td>
                                     <td>{{ $rdv->heure_fin }}</td>
-                                    <td>{{ $rdv->conseiller->full_name }}</td>
                                     <td>{{ $rdv->libelle }}</td>
                                     <td>{{ $rdv->statut }}</td>
                                     <td>{{ $rdv->motif_abs }}</td>

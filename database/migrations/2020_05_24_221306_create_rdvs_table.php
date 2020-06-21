@@ -25,8 +25,10 @@ class CreateRdvsTable extends Migration
             $table->integer('rang_rdv_p')->default(0);
             $table->integer('prestation_id')->unsigned()->index();
             $table->foreign('prestation_id')->references('id')->on('prestations')->onDelete('cascade');
+            /*
             $table->integer('conseiller_id')->unsigned()->index();
             $table->foreign('conseiller_id')->references('id')->on('conseillers')->onDelete('cascade');
+            */
             $table->timestamps();
         });
     }

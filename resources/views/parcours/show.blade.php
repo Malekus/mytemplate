@@ -21,6 +21,42 @@
             <div class="card card-body">
                 <h3 class="card-title mt-0">Bénéficiaire</h3>
                 <ul class="list-group">
+                    <li class="list-group-item"><strong>Nom</strong> : <a href="{{ route('beneficiaires.show', $beneficiaire) }}">{{ $beneficiaire->full_name }}</a></li>
+                    <li class="list-group-item"><strong>Prénom</strong> : {{ $beneficiaire->prenom }}</li>
+                    <li class="list-group-item"><strong>Téléphone</strong> : {{ $beneficiaire->tel }}</li>
+                    <li class="list-group-item"><strong>Email</strong> : {{ $beneficiaire->email }}</li>
+                    <li class="list-group-item"><strong>Adresse</strong> : {{ $beneficiaire->adresse }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h3 class="card-title mt-0">Projet</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Intitulé</strong> : {{ $parcours->projet->intitule }}</li>
+                    <li class="list-group-item"><strong>Activité</strong> : {{ $parcours->projet->activite }}</li>
+                    <li class="list-group-item"><strong>Description</strong> : {{ $parcours->projet->description }}</li>
+                    <li class="list-group-item"><strong>Date de début</strong>
+                        : {{ \Carbon\Carbon::parse($parcours->projet->date_debut)->format('d/m/Y') }}</li>
+                    <li class="list-group-item"><strong>Statut</strong> : {{ $parcours->projet->statut }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('script')
+
+@endsection
+
+
+{{--
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <h3 class="card-title mt-0">Bénéficiaire</h3>
+                <ul class="list-group">
                     <li class="list-group-item"><strong>Nom</strong> : <a href="{{ route('beneficiaires.show', $parcours->beneficiaire->id) }}">{{ $parcours->beneficiaire->nom }}</a></li>
                     <li class="list-group-item"><strong>Prénom</strong> : {{ $parcours->beneficiaire->prenom }}</li>
                     <li class="list-group-item"><strong>Téléphone</strong> : {{ $parcours->beneficiaire->tel }}</li>
@@ -65,9 +101,4 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section('script')
-
-@endsection
+--}}

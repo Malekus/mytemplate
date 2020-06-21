@@ -30,7 +30,6 @@ class ProjetController extends Controller
 
     public function store(ProjetRequest $request)
     {
-        //dd($request->all());
         $projet = new Projet($request->all());
         $projet->save();
         return redirect(route('projets.show', ['projet' => $projet]));

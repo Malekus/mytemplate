@@ -35,26 +35,23 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Parcours enregistré</h4>
+                    {{--
+                        <h4 class="card-title">Parcours enregistré</h4>
+                    --}}
 
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
-                        <tr>
-                            <th>Bénéficiaire</th>
-                            <th>Projet</th>
-                            <th>Conseiller</th>
-                            <th>Prescripteur</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>Bénéficiaire</th>
+                                <th>Projet</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
-
                         <tbody>
                         @foreach($parcours as $parcour)
                             <tr>
-                                <td>{{ $parcour->beneficiaire->full_name }}</td>
+                                <td>{{ $parcour->projet->beneficiaire->full_name }}</td>
                                 <td>{{ $parcour->projet->intitule }}</td>
-                                <td>{{ $parcour->conseiller->full_name }}</td>
-                                <td>{{ $parcour->prescripteur->nom }}</td>
                                 <td class="text-center">
                                     <a class="btn btn-success" href="{{ route("parcours.show", $parcour) }}">Afficher</a>
                                     <a class="btn btn-primary" href="{{ route("parcours.edit", $parcour) }}">Modifier</a>

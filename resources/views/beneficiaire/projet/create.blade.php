@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    {!! Form::open(['method' => 'POST', 'url' => route('beneficiaires.store.projets'), 'class' => 'custom-validation', 'novalidate']) !!}
+                    {!! Form::open(['method' => 'POST', 'url' => route('beneficiaires.projets.store', $beneficiaire), 'class' => 'custom-validation outer-repeater', 'novalidate']) !!}
 
                     @include('beneficiaire.projet.form')
 
@@ -38,7 +38,6 @@
                     </div>
 
                     {!! Form::close() !!}
-
                 </div>
             </div>
         </div> <!-- end col -->
@@ -46,7 +45,8 @@
 @endsection
 
 @section('script')
+    <script src="{{ URL::asset('assets/libs/jquery-repeater/jquery-repeater.min.js')}}"></script>
+    <script src="{{ URL::asset('assets/js/pages/form-repeater.int.js')}}"></script>
     <script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js')}}"></script>
-
     <script src="{{ URL::asset('assets/js/pages/form-validation.init.js')}}"></script>
 @endsection

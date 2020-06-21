@@ -14,7 +14,6 @@
                 <h4 class="font-size-18">Bénéficiaire</h4>
             </div>
         </div>
-
         <div class="col-sm-6">
             <div class="float-right d-none d-md-block">
                 <div class="dropdown">
@@ -35,8 +34,9 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Bénéficiare enregistré</h4>
-
+                    {{--
+                        <h4 class="card-title">Bénéficiare enregistré</h4>
+                    --}}
                     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>

@@ -12,6 +12,6 @@ class OrganisationParcourSeeder extends Seeder
      */
     public function run()
     {
-        factory(OrganisationParcour::class, 100)->create();
+        factory(OrganisationParcour::class, 200)->create();
     }
 }

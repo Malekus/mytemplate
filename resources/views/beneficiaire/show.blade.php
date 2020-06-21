@@ -28,7 +28,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('beneficiaires.create.parcours', $beneficiaire) }}">Ajouter un parcours</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('beneficiaires.create.projets', $beneficiaire) }}">Ajouter
+                        <a class="dropdown-item" href="{{ route('beneficiaires.projets.create', $beneficiaire) }}">Ajouter
                             un projet</a>
                     </div>
                 </div>
@@ -53,7 +53,10 @@
                             <ul class="list-group">
                                 <li class="list-group-item"><strong>Crée le</strong> : {{ \Carbon\Carbon::parse($beneficiaire->created_at)->format('d/m/Y') }}</li>
                                 <li class="list-group-item"><strong>Dernière activité</strong> : {{ \Carbon\Carbon::parse($beneficiaire->updated_at)->format('d/m/Y') }}</li>
+                                <li class="list-group-item"><strong>Nombre de parcours</strong> : A FAIRE</li>
+                                {{--
                                 <li class="list-group-item"><strong>Nombre de parcours</strong> : {{ $beneficiaire->parcours->count() }}</li>
+                                --}}
                             </ul>
                         </div>
                     </div>
@@ -67,7 +70,6 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-
                     <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#tabProjet" role="tab">
@@ -105,30 +107,31 @@
                             @if ($beneficiaire->projets->count() !== 0)
                                 <table class="table table-bordered mb-0">
                                     <thead>
-                                        <tr>
-                                            <th>Intitulé</th>
-                                            <th>Activité</th>
-                                            <th>Description</th>
-                                            <th>Date de début</th>
-                                            <th>Date de fin</th>
-                                            <th>Statut</th>
-                                            <th>Conseiller</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Intitulé</th>
+                                        <th>Activité</th>
+                                        <th>Description</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Statut</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($beneficiaire->projets as $projet)
-                                            <tr>
-                                                <td>{{ $projet->intitule }}</td>
-                                                <td>{{ $projet->activite }}</td>
-                                                <td>{{ $projet->description }}</td>
-                                                <td>{{ $projet->date_debut }}</td>
-                                                <td>{{ $projet->date_fin }}</td>
-                                                <td>{{ $projet->statut }}</td>
-                                                <td>{{ $projet->conseiller->full_name }}</td>
-                                                <td>Action</td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach($beneficiaire->projets as $projet)
+                                        <tr>
+                                            <td>{{ $projet->intitule }}</td>
+                                            <td>{{ $projet->activite }}</td>
+                                            <td>{{ $projet->description }}</td>
+                                            <td>{{ $projet->date_debut }}</td>
+                                            <td>{{ $projet->date_fin }}</td>
+                                            <td>{{ $projet->statut }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" href="{{ route("projets.edit", $projet) }}">Modifier</a>
+                                                <button class="btn btn-danger sa-warning" id="{{ $projet->id }}">Supprimer</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
 
@@ -150,24 +153,22 @@
                                     <thead>
                                     <tr>
                                         <th>Projet</th>
-                                        <th>Conseiller</th>
-                                        <th>Prescripteur</th>
+                                        <th>id Parcours</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($beneficiaire->parcours as $parcours)
-                                            <tr>
-                                                <td>{{ $parcours->projet->intitule }}</td>
-                                                <td>{{ $parcours->conseiller->full_name }}</td>
-                                                <td>{{ $parcours->prescripteur->full_name }}</td>
-                                                <td class="text-center">
-                                                    <a class="btn btn-success" href="{{ route("beneficiaires.show", $beneficiaire) }}">Afficher</a>
-                                                    <a class="btn btn-primary" href="{{ route("beneficiaires.edit", $beneficiaire) }}">Modifier</a>
-                                                    <button class="btn btn-danger sa-warning" id="{{ $beneficiaire->id }}">Supprimer</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach($beneficiaire->parcours as $parcour)
+                                        <tr>
+                                            <td>{{ $parcour->projet->intitule }}</td>
+                                            <td>{{ $parcour->id }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-success" href="{{ route("parcours.show", $parcour) }}">Afficher</a>
+                                                <a class="btn btn-primary" href="{{ route("parcours.edit", $parcour) }}">Modifier</a>
+                                                <button class="btn btn-danger sa-warning" id="{{ $parcour->id }}">Supprimer</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             @else
@@ -195,6 +196,7 @@
     </div>
     <!-- end page -->
 
+    {{--
     @if($beneficiaire->parcours->count() != 0)
         <div class="row" id="displayParcours">
             <div class="col-12">
@@ -279,6 +281,7 @@
         </div>
     @endif
 
+    --}}
 @endsection
 
 @section('script')
@@ -351,6 +354,93 @@
 @endsection
 
 {{--
-https://makitweb.com/dynamically-load-content-in-bootstrap-modal-with-ajax/
+<div class="tab-content">
+                        <div class="tab-pane active p-3" id="tabProjet" role="tabpanel">
+                            @if ($beneficiaire->projets->count() !== 0)
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Intitulé</th>
+                                        <th>Activité</th>
+                                        <th>Description</th>
+                                        <th>Date de début</th>
+                                        <th>Date de fin</th>
+                                        <th>Statut</th>
+                                        <th>Conseiller</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($beneficiaire->projets as $projet)
+                                        <tr>
+                                            <td>{{ $projet->intitule }}</td>
+                                            <td>{{ $projet->activite }}</td>
+                                            <td>{{ $projet->description }}</td>
+                                            <td>{{ $projet->date_debut }}</td>
+                                            <td>{{ $projet->date_fin }}</td>
+                                            <td>{{ $projet->statut }}</td>
+                                            <td>{{ $projet->conseiller->full_name }}</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
 
+
+                            @else
+                                Aucun projet
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabEntreprise" role="tabpanel">
+                            @if (isset($beneficiaire->entreprises))
+                                {{ $beneficiaire->entreprises }}
+                            @else
+                                Aucun entreprise
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabParcours" role="tabpanel">
+                            @if (isset($beneficiaire->parcours))
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th>Projet</th>
+                                        <th>Conseiller</th>
+                                        <th>Prescripteur</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($beneficiaire->parcours as $parcours)
+                                        <tr>
+                                            <td>{{ $parcours->projet->intitule }}</td>
+                                            <td>{{ $parcours->conseiller->full_name }}</td>
+                                            <td>{{ $parcours->prescripteur->full_name }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-success" href="{{ route("beneficiaires.show", $beneficiaire) }}">Afficher</a>
+                                                <a class="btn btn-primary" href="{{ route("beneficiaires.edit", $beneficiaire) }}">Modifier</a>
+                                                <button class="btn btn-danger sa-warning" id="{{ $beneficiaire->id }}">Supprimer</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                Aucun parcours
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabPrestation" role="tabpanel">
+                            @if (isset($beneficiaire->entreprises))
+                                {{ $beneficiaire->entreprises }}
+                            @else
+                                Aucune prestation
+                            @endif
+                        </div>
+                        <div class="tab-pane p-3" id="tabRdv" role="tabpanel">
+                            @if (isset($beneficiaire->entreprises))
+                                {{ $beneficiaire->entreprises }}
+                            @else
+                                Aucun rendez-vous
+                            @endif
+                        </div>
+                    </div>
 --}}

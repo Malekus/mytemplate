@@ -58,6 +58,13 @@ Route::resource('rdvs', 'RdvController')
 Route::get('/rdv/{prestation}/create', 'RdvController@create')
     ->name('rdvs.create.prestations');
 
+Route::resource('organisations', 'OrganisationController');
+Route::resource('personnes', 'PersonneController');
+Route::resource('configurations', 'ConfigurationController');
+Route::resource('beneficiaires.projets', 'BeneficiaireProjetController');
+
+
+
 /*
 Route::get('/beneficiaires', 'BeneficiaireController@index')
     ->name('beneficiaire.index');
@@ -83,4 +90,4 @@ Route::delete('/beneficiaire', 'BeneficiaireController@destroy')
 */
 // Route::get('{any}', 'VeltrixController@index');
 
-Route::resource('organisations', 'OrganisationController');
+

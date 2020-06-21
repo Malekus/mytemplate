@@ -18,6 +18,6 @@ $factory->define(Rdv::class, function (Faker $faker) {
         'rang_rdv' => $faker->numberBetween($min = 0, $max = 9),
         'rang_rdv_p' => $faker->numberBetween($min = 0, $max = 9),
         'prestation_id' => Prestation::all()->random()->id,
-        'conseiller_id' => Conseiller::all()->random()->id
+        //'conseiller_id' => Conseiller::all()->random()->id
     ];
 });

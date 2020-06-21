@@ -22,8 +22,7 @@ class ParcoursController extends Controller
 
     public function index()
     {
-        $parcours = Parcours::with('beneficiaire')
-            ->with('projet')
+        $parcours = Parcours::with('projet')
             ->with('conseiller')
             ->with('prescripteur')
             ->get();
@@ -33,7 +32,8 @@ class ParcoursController extends Controller
     public function show($id)
     {
         $parcours = Parcours::find($id);
-        return view('parcours.show', compact('parcours'));
+        $beneficiaire = $parcours->projet->beneficiaire;
+        return view('parcours.show', compact(['parcours', 'beneficiaire']));
     }
 
     public function create()

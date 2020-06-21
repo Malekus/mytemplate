@@ -10,14 +10,14 @@ class Beneficiaire extends Model
     //protected $fillable = ['nom', 'prenom', 'civilite', 'tel', 'email', 'adresse', 'code_postal', 'ville', 'region', 'pays', 'qpv'];
     protected $guarded = ['id'];
 
-    public function parcours()
-    {
-        return $this->hasMany(Parcours::class);
-    }
-
     public function projets()
     {
         return $this->hasMany(Projet::class);
+    }
+
+    public function parcours()
+    {
+        return $this->hasManyThrough(Parcours::class, Projet::class);
     }
 
     public function getFullNameAttribute()

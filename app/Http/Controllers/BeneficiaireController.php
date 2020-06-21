@@ -22,7 +22,7 @@ class BeneficiaireController extends Controller
 
     public function index()
     {
-        $beneficiaires = Beneficiaire::with('parcours')->get();
+        $beneficiaires = Beneficiaire::with('projets')->get();
         return view('beneficiaire.index', compact('beneficiaires'));
     }
 

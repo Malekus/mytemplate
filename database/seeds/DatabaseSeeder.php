@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            ConfigurationTableSeeder::class,
             BeneficiairesTableSeeder::class,
             ConseillerTableSeeder::class,
             ReferentTableSeeder::class,
@@ -22,6 +23,10 @@ class DatabaseSeeder extends Seeder
             RdvTableSeeder::class,
             OrganisationTableSeeder::class,
             OrganisationParcourSeeder::class,
+            PersonneTableSeeder::class,
+            ParcourPersonneSeeder::class,
+            OrganisationPersonneSeeder::class,
+            PersonneRdvSeeder::class
         ]);
     }
 }
