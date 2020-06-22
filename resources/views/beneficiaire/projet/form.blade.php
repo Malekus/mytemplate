@@ -18,8 +18,6 @@
 </div>
 --}}
 
-
-
 <div class="form-group row">
     {!! Form::label('intitule', 'Intitulé', ['class' => 'col-sm-2 col-form-label']) !!}
     <div class="col-sm-10">

@@ -15,12 +15,12 @@ class BeneficiaireProjetController extends Controller
         return view('beneficiaire.projet.create', compact(['personnes', 'beneficiaire']));
     }
 
-
     public function store(Request $request)
     {
-        $projet = new Projet($request->except(['beneficiaire_id', 'inner-group']));
+        $projet = new Projet($request->except(['beneficiaire_id']));
         $projet->beneficiaire()->associate(Beneficiaire::find($request->get('beneficiaire_id')));
         $projet->save();
         return redirect(route('beneficiaires.show', ['beneficiaire' => $request->get('beneficiaire_id')]));
     }
+
 }

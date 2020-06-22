@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjetRequest;
+use App\Personne;
 use App\Projet;
 use App\Conseiller;
 
@@ -23,9 +24,8 @@ class ProjetController extends Controller
 
     public function create()
     {
-        $conseillers = Conseiller::all()->pluck('full_name', 'id');
-        $beneficiaires = Conseiller::all()->pluck('full_name', 'id');
-        return view('projet.create', compact(['conseillers', 'beneficiaires']));
+        $personnes = Personne::all()->pluck('full_name', 'id');
+        return view('projet.create', compact(['personnes']));
     }
 
     public function store(ProjetRequest $request)
@@ -38,16 +38,14 @@ class ProjetController extends Controller
     public function edit($id)
     {
         $projet = Projet::find($id);
-        $conseillers = Conseiller::all()->pluck('full_name', 'id');
-        $beneficiaires = Conseiller::all()->pluck('full_name', 'id');
-        return view('projet.edit', compact(['projet', 'conseillers', 'beneficiaires']));
+        return view('projet.edit', compact(['projet']));
     }
 
     public function update(ProjetRequest $request, $id)
     {
         $projet = Projet::findOrFail($id);
         $projet->update($request->all());
-        return redirect(route('projets.show', $id));
+        return redirect(route('beneficiaires.show', $projet->beneficiaire->id));
     }
 
     public function destroy($id)

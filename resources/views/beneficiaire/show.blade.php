@@ -105,7 +105,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active p-3" id="tabProjet" role="tabpanel">
                             @if ($beneficiaire->projets->count() !== 0)
-                                <table class="table table-bordered mb-0">
+                                <table class="table table-bordered mb-0" id="tableProjet">
                                     <thead>
                                     <tr>
                                         <th>Intitulé</th>
@@ -128,7 +128,7 @@
                                             <td>{{ $projet->statut }}</td>
                                             <td class="text-center">
                                                 <a class="btn btn-primary" href="{{ route("projets.edit", $projet) }}">Modifier</a>
-                                                <button class="btn btn-danger sa-warning" id="{{ $projet->id }}">Supprimer</button>
+                                                <button class="btn btn-danger sa-warning" id="{{ $projet->id }}" data-entity="Projet">Supprimer</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -299,35 +299,47 @@
         });
 
         $('.sa-warning').click(function () {
-            var url = '{{ url('/parcours/:parcours')}}';
-            url = url.replace(':parcours', $(this).attr('id'));
-            var row = $(this).closest(".card")
+            if($(this).data('entity') === "Projet"){
+                var entity = $(this).data('entity').toLowerCase();
+                var url = '{{ url('/-models/:models')}}';
+                //url = url.replace(':projets', $(this).attr('id'));
+                url = url.replace('-models', entity + 's');
+                url = url.replace(':models', $(this).attr('id'));
+                var row = $(this).closest("tr");
 
-            Swal.fire({
-                title: "Voulez vous supprimer ce parcours ?",
-                text: "Vous ne pourrez pas revenir en arrière !",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#34c38f",
-                cancelButtonColor: "#f46a6a",
-                confirmButtonText: "Supprimer",
-                cancelButtonText: "Annuler"
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        url: url,
-                        method : "delete",
-                        success: function (data) {
-                            row.remove();
-                            if($('#accordion').html().trim() === $('<div id="accordion"></div>').html()) $("#displayParcours").remove();
-                        },
-                        error: function (data) {
-                            console.log("fail" + data);
-                        }
-                    });
-                    Swal.fire("Supprimé !", "Le parcours a été supprimé.", "success");
-                }
-            });
+                Swal.fire({
+                    title: "Voulez vous supprimer ce " + entity + " ?",
+                    text: "Vous ne pourrez pas revenir en arrière !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#34c38f",
+                    cancelButtonColor: "#f46a6a",
+                    confirmButtonText: "Supprimer",
+                    cancelButtonText: "Annuler"
+                }).then(function (result) {
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            method : "delete",
+                            success: function (data) {
+                                row.remove();
+                                if($('#tableProjet tbody').html().trim() === "") $("#tabProjet").html("Aucun " + entity);
+                                Swal.fire("Supprimé !", "Le " + entity + " a été supprimé.", "success");
+                            },
+                            error: function (data) {
+                                console.log("fail" + data);
+                                Swal.fire("Oups !", "Problème provenant du serveur.", "error");
+                            }
+                        });
+
+                    }
+                });
+
+            }
+            else {
+
+            }
+
         });
 
         $('.btn.btn-warning').click(function () {
